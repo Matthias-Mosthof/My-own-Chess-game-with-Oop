@@ -12,4 +12,4 @@ It isnt there to copy any existing project on this subject as I do this to learn
 
 ## Goal
 
-A fully working chess game for 2 Players.
+A fully working chess game with all its mechanics for 2 Players.
