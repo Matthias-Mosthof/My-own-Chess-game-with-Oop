@@ -1,3 +1,5 @@
+/* General Styling */
+
 * {
   box-sizing: border-box;
 }
@@ -8,24 +10,7 @@
   background-color: black;
 }
 
-.possiblemove {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 5rem;
-  transition: background-color 0.5s;
-  background-color: rgb(135, 82, 82);
-  position: absolute;
-  left: 35%;
-  top: 35%;
-}
-
-.hm {
-  transform: scale(1.2);
-  background: url(illustrations\dot-svgrepo-com.svg);
-  background-size: 100%;
-  z-index: 1;
-}
-
+/* The Chess Board Layout */
 .main-container {
   position: fixed;
   left: 10%;
@@ -45,6 +30,8 @@
   width: 70rem;
 }
 
+/* Styling and Positioning for each piece*/
+
 .pieces {
   transform: scale(3);
   position: absolute;
@@ -52,6 +39,22 @@
   left: 2.4rem;
   z-index: 1;
 }
+
+/* Classes for Javascript */
+/* Dots Styling for possible Moves */
+
+.possiblemove {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5rem;
+  transition: background-color 0.5s;
+  background-color: rgb(135, 82, 82);
+  position: absolute;
+  left: 35%;
+  top: 35%;
+}
+
+/* Foundation for Chess Board Layout */
 
 .field {
   border: 2px solid black;
