@@ -7,6 +7,24 @@
   --second-color: rgb(255, 233, 143);
   background-color: black;
 }
+
+.possiblemove {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5rem;
+  background-color: rgb(135, 82, 82);
+  position: absolute;
+  left: 35%;
+  top: 35%;
+}
+
+.hm {
+  transform: scale(1.2);
+  background: url(illustrations\dot-svgrepo-com.svg);
+  background-size: 100%;
+  z-index: 1;
+}
+
 .main-container {
   position: fixed;
   left: 10%;
