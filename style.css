@@ -12,6 +12,7 @@
   width: 2rem;
   height: 2rem;
   border-radius: 5rem;
+  transition: background-color 0.5s;
   background-color: rgb(135, 82, 82);
   position: absolute;
   left: 35%;
