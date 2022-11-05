@@ -5,10 +5,11 @@
 :root {
   --main-color: rgb(90, 57, 11);
   --second-color: rgb(255, 233, 143);
+  background-color: black;
 }
 .main-container {
   position: fixed;
-  left: 39%;
+  left: 10%;
   top: 8%;
   display: grid;
   grid:
@@ -25,9 +26,18 @@
   width: 70rem;
 }
 
+.pieces {
+  transform: scale(3);
+  position: absolute;
+  top: 2.5rem;
+  left: 2.4rem;
+  z-index: 1;
+}
+
 .field {
   border: 2px solid black;
   color: rgb(147, 139, 139);
+  position: relative;
 }
 
 .a1 {
@@ -37,6 +47,7 @@
 .a2 {
   grid-area: a2;
   background-color: var(--second-color);
+  align-self: ce;
 }
 .a3 {
   grid-area: a3;

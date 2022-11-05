@@ -7,7 +7,8 @@ It isnt there to copy any existing projects on this subject as I do this to lear
 
 ## Progress
 
-05.11.22: Crerating the Chess Board using Grid-Areas. These are 64 areas as the Chess Board consists of 8 x 8 fields.
+04.11.22: Crerating the Chess Board using Grid-Areas. These are 64 areas as the Chess Board consists of 8 x 8 fields.
+05.11.22: Placing the White and Black Pieces in the starting Position.
 
 ## Goal
 
