@@ -52,6 +52,7 @@
   position: absolute;
   left: 35%;
   top: 35%;
+  display: block;
 }
 
 /* Foundation for Chess Board Layout */

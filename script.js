@@ -1,3 +1,87 @@
+let moveCounter = 0;
+let whitePieceCounter = 0;
+let blackPieceCounter = 0;
+let lastMovedPiece;
+let lastMovedSide;
+let clickCounter = 0;
+let pieceIsActive = false;
+
+const state = {
+  Start: [{ move: 0, done: false, whitePieces: 16, blackPieces: 16 }],
+  Moves: [
+    {
+      moves: moveCounter,
+      done: false,
+      whitePieces: whitePieceCounter,
+      blackPieces: blackPieceCounter,
+    },
+  ],
+  currentMove: [
+    {
+      move: moveCounter,
+      lastMovedPiece: lastMovedPiece,
+      lastMovedSide: lastMovedSide,
+    },
+  ],
+  End: [
+    {
+      moves: moveCounter,
+      done: true,
+      whitePieces: whitePieceCounter,
+      blackPieces: blackPieceCounter,
+    },
+  ],
+};
+
+function pieceDeactivateActivate() {
+  clickCounter++;
+  if (clickCounter === 2) {
+    clickCounter = 0;
+    return (pieceIsActive = false);
+  } else if (clickCounter === 1) {
+    pieceIsActive = true;
+  }
+
+  return pieceIsActive;
+}
+
+const fieldb3 = document.querySelector("#field-b3");
+const fieldb4 = document.querySelector("#field-b4");
+
+const pawnB2 = document.querySelector("#white-pawn-b2");
+
+pawnB2.addEventListener("click", (event) => {
+  pieceDeactivateActivate();
+  if (pieceIsActive === true) {
+    fieldb3.addEventListener("click", () => {
+      clickCounter = 0;
+      clickCounter++;
+      //console.log(clickCounter);
+      if (clickCounter === 1) {
+        fieldb3.append(pawnB2);
+        moveCounter = 1;
+        possibleB3.style.width = "0px";
+        possibleB4.style.width = "0px";
+        return moveCounter;
+      }
+    });
+  }
+  if (pieceIsActive === true) {
+    fieldb4.addEventListener("click", () => {
+      clickCounter = 0;
+      clickCounter++;
+      //console.log(clickCounter);
+      if (clickCounter === 1) {
+        fieldb4.append(pawnB2);
+        moveCounter = 1;
+        possibleB3.style.width = "0px";
+        possibleB4.style.width = "0px";
+        return moveCounter;
+      }
+    });
+  }
+});
+//console.log(moveCounter);
 // Showing all possible moves for Each piece on the first Move
 // White Pieces
 // Pawns
@@ -16,8 +100,6 @@ function toggle() {
 pawnA2.addEventListener("click", toggle);
 
 // Pawn B2 Possible Moves:
-
-const pawnB2 = document.querySelector("div:nth-child(10) > svg");
 
 const possibleB3 = document.querySelector("div:nth-child(11) > aside");
 const possibleB4 = document.querySelector("div:nth-child(12) > aside");
