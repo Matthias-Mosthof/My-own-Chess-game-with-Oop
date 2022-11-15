@@ -16,13 +16,16 @@ It isnt there to copy any existing project on this subject as I do this to learn
 14.11.22: Adding a Datastructure-Basis. The Structure constists of an Object with different states. Each state is an Object within an Array.
 
 14.11.22: Adding the possibilty to move a Piece (Pawnb2 to B3 or B4)
+
 -> This is just for me to get an Idea how to move pieces. In the final code a move should be saved in the State object and rendered from there.
 
 15.11.22: Adding the basics of a global Renderfunction per move.
 Adding more values which are going to be saved per move (->in Object)
 
 -> Last position of Piece
+
 -> Move Amount
+
 -> current field position
 etc.
 
