@@ -1,38 +1,178 @@
+// Jedes Feld als Variable speichern
+const fielda1 = document.querySelector("#field-a1");
+const fielda2 = document.querySelector("#field-a2");
+const fielda3 = document.querySelector("#field-a3");
+const fielda4 = document.querySelector("#field-a4");
+const fielda5 = document.querySelector("#field-a5");
+const fielda6 = document.querySelector("#field-a6");
+const fielda7 = document.querySelector("#field-a7");
+const fielda8 = document.querySelector("#field-a8");
+const fieldb1 = document.querySelector("#field-b1");
+const fieldb2 = document.querySelector("#field-b2");
+const fieldb3 = document.querySelector("#field-b3");
+const fieldb4 = document.querySelector("#field-b4");
+const fieldb5 = document.querySelector("#field-b5");
+const fieldb6 = document.querySelector("#field-b6");
+const fieldb7 = document.querySelector("#field-b7");
+const fieldb8 = document.querySelector("#field-b8");
+const fieldc1 = document.querySelector("#field-c1");
+const fieldc2 = document.querySelector("#field-c2");
+const fieldc3 = document.querySelector("#field-c3");
+const fieldc4 = document.querySelector("#field-c4");
+const fieldc5 = document.querySelector("#field-c5");
+const fieldc6 = document.querySelector("#field-c6");
+const fieldc7 = document.querySelector("#field-c7");
+const fieldc8 = document.querySelector("#field-c8");
+const fieldd1 = document.querySelector("#field-d1");
+const fieldd2 = document.querySelector("#field-d2");
+const fieldd3 = document.querySelector("#field-d3");
+const fieldd4 = document.querySelector("#field-d4");
+const fieldd5 = document.querySelector("#field-d5");
+const fieldd6 = document.querySelector("#field-d6");
+const fieldd7 = document.querySelector("#field-d7");
+const fieldd8 = document.querySelector("#field-d8");
+const fielde1 = document.querySelector("#field-e1");
+const fielde2 = document.querySelector("#field-e2");
+const fielde3 = document.querySelector("#field-e3");
+const fielde4 = document.querySelector("#field-e4");
+const fielde5 = document.querySelector("#field-e5");
+const fielde6 = document.querySelector("#field-e6");
+const fielde7 = document.querySelector("#field-e7");
+const fielde8 = document.querySelector("#field-e8");
+const fieldf1 = document.querySelector("#field-f1");
+const fieldf2 = document.querySelector("#field-f2");
+const fieldf3 = document.querySelector("#field-f3");
+const fieldf4 = document.querySelector("#field-f4");
+const fieldf5 = document.querySelector("#field-f5");
+const fieldf6 = document.querySelector("#field-f6");
+const fieldf7 = document.querySelector("#field-f7");
+const fieldf8 = document.querySelector("#field-f8");
+const fieldg1 = document.querySelector("#field-g1");
+const fieldg2 = document.querySelector("#field-g2");
+const fieldg3 = document.querySelector("#field-g3");
+const fieldg4 = document.querySelector("#field-g4");
+const fieldg5 = document.querySelector("#field-g5");
+const fieldg6 = document.querySelector("#field-g6");
+const fieldg7 = document.querySelector("#field-g7");
+const fieldg8 = document.querySelector("#field-g8");
+const fieldh1 = document.querySelector("#field-h1");
+const fieldh2 = document.querySelector("#field-h2");
+const fieldh3 = document.querySelector("#field-h3");
+const fieldh4 = document.querySelector("#field-h4");
+const fieldh5 = document.querySelector("#field-h5");
+const fieldh6 = document.querySelector("#field-h6");
+const fieldh7 = document.querySelector("#field-h7");
+const fieldh8 = document.querySelector("#field-h8");
+
+// Alle weißen Figuren als Variable speichern
+// Bauern
+const pawnA2 = document.querySelector("#white-pawn-a2");
+const pawnB2 = document.querySelector("#white-pawn-b2");
+const pawnC2 = document.querySelector("#white-pawn-c2");
+const pawnD2 = document.querySelector("#white-pawn-d2");
+const pawnE2 = document.querySelector("#white-pawn-e2");
+const pawnF2 = document.querySelector("#white-pawn-f2");
+const pawnG2 = document.querySelector("#white-pawn-g2");
+const pawnH2 = document.querySelector("#white-pawn-h2");
+
+// Türme
+const rookA1 = document.querySelector("#white-rook-a1");
+const rookH1 = document.querySelector("#white-rook-h1");
+
+// Läufer
+const bishopC1 = document.querySelector("#white-bishop-c1");
+const bishopF1 = document.querySelector("#white-bishop-f1");
+
+// Springer
+const knightB1 = document.querySelector("#white-knight-b1");
+const knightG1 = document.querySelector("#white-knight-g1");
+
+// Dame
+const queenD1 = document.querySelector("#white-queen-d1");
+
+// König
+const kingE1 = document.querySelector("#white-king-e1");
+
 let moveCounter = 0;
-let whitePieceCounter = 0;
-let blackPieceCounter = 0;
+let whitePieceAmount = 16;
+let blackPieceAmount = 16;
 let lastMovedPiece;
 let lastMovedSide;
 let clickCounter = 0;
 let pieceIsActive = false;
+let currentPosition;
+let lastPosition;
+let currentMovedPiece;
 
 const state = {
-  Start: [{ move: 0, done: false, whitePieces: 16, blackPieces: 16 }],
-  Moves: [
+  Start: [
     {
-      moves: moveCounter,
+      move: 0,
       done: false,
-      whitePieces: whitePieceCounter,
-      blackPieces: blackPieceCounter,
+      whitePieces: whitePieceAmount,
+      blackPieces: blackPieceAmount,
+    },
+  ],
+  betweenStartAndEnd: [
+    {
+      moveAmount: moveCounter,
+      done: false,
+      whitePieces: whitePieceAmount,
+      blackPieces: blackPieceAmount,
+      moveHistory: [],
     },
   ],
   currentMove: [
     {
-      move: moveCounter,
       lastMovedPiece: lastMovedPiece,
       lastMovedSide: lastMovedSide,
+      currentMovedPiece: currentMovedPiece,
+      pieceMovedFromPosition: lastPosition,
+      pieceMovedToPosition: currentPosition,
     },
   ],
   End: [
     {
       moves: moveCounter,
       done: true,
-      whitePieces: whitePieceCounter,
-      blackPieces: blackPieceCounter,
+      whitePieces: whitePieceAmount,
+      blackPieces: blackPieceAmount,
     },
   ],
 };
 
+function renderMove() {
+  //state.Start.forEach((move) => console.log(move));
+
+  //state.betweenStartAndEnd.forEach((move) => console.log(move));
+
+  state.currentMove.forEach((move) => console.log(move));
+
+  //state.End.forEach((move) => console.log(move));
+
+  let positionNow = state.currentMove[0].pieceMovedToPosition;
+  let pieceNow = state.currentMove[0].currentMovedPiece;
+
+  if (positionNow === "fieldb3") {
+    fieldb3.append(pieceNow);
+    //moveCounter++;
+  }
+
+  if (positionNow === "fieldc3") {
+    fieldc3.append(pieceNow);
+    //moveCounter++;
+  }
+  if (positionNow === "fieldc4") {
+    fieldc4.append(pieceNow);
+    //moveCounter++;
+  }
+
+  console.log(state.betweenStartAndEnd[0]);
+  console.log(state.currentMove[0]);
+}
+renderMove();
+
+// Funktion um true oder false auszugeben wenn Figur geklickt wird
 function pieceDeactivateActivate() {
   clickCounter++;
   if (clickCounter === 2) {
@@ -45,49 +185,66 @@ function pieceDeactivateActivate() {
   return pieceIsActive;
 }
 
-const fieldb3 = document.querySelector("#field-b3");
-const fieldb4 = document.querySelector("#field-b4");
-
-const pawnB2 = document.querySelector("#white-pawn-b2");
-
-pawnB2.addEventListener("click", (event) => {
+pawnB2.addEventListener("click", () => {
   pieceDeactivateActivate();
+  let parent = pawnB2.parentElement;
   if (pieceIsActive === true) {
     fieldb3.addEventListener("click", () => {
       clickCounter = 0;
       clickCounter++;
-      //console.log(clickCounter);
       if (clickCounter === 1) {
-        fieldb3.append(pawnB2);
-        moveCounter = 1;
         possibleB3.style.width = "0px";
         possibleB4.style.width = "0px";
-        return moveCounter;
-      }
-    });
-  }
-  if (pieceIsActive === true) {
-    fieldb4.addEventListener("click", () => {
-      clickCounter = 0;
-      clickCounter++;
-      //console.log(clickCounter);
-      if (clickCounter === 1) {
-        fieldb4.append(pawnB2);
-        moveCounter = 1;
-        possibleB3.style.width = "0px";
-        possibleB4.style.width = "0px";
-        return moveCounter;
+        state.currentMove[0].pieceMovedToPosition = "fieldb3";
+        state.currentMove[0].currentMovedPiece = pawnB2;
+        state.betweenStartAndEnd[0].moveAmount = moveCounter;
+        state.currentMove[0].lastMovedSide = "White";
+        state.currentMove[0].pieceMovedFromPosition = parent;
+        renderMove();
+        clickCounter--;
+        return;
       }
     });
   }
 });
+
+pawnC2.addEventListener("click", () => {
+  pieceDeactivateActivate();
+  let parent = pawnC2.parentElement;
+  if (pieceIsActive === true) {
+    fieldc3.addEventListener("click", () => {
+      state.currentMove[0].pieceMovedToPosition = "fieldc3";
+      writeMoveToObjectPawnC2();
+    });
+
+    fieldc4.addEventListener("click", () => {
+      state.currentMove[0].pieceMovedToPosition = "fieldc4";
+      writeMoveToObjectPawnC2();
+    });
+  }
+});
+
+function writeMoveToObjectPawnC2() {
+  clickCounter = 0;
+  clickCounter++;
+  if (clickCounter === 1) {
+    possibleC3.style.width = "0px";
+    possibleC4.style.width = "0px";
+    state.currentMove[0].currentMovedPiece = pawnC2;
+    state.betweenStartAndEnd[0].moveAmount = moveCounter;
+    state.currentMove[0].lastMovedSide = "White";
+    state.currentMove[0].pieceMovedFromPosition = parent;
+    renderMove();
+    clickCounter--;
+    return moveCounter;
+  }
+}
+
 //console.log(moveCounter);
 // Showing all possible moves for Each piece on the first Move
 // White Pieces
 // Pawns
 // Pawn A2 Possible Moves:
-
-const pawnA2 = document.querySelector("div:nth-child(2)> svg");
 
 const possibleA3 = document.querySelector("div:nth-child(3) > aside");
 const possibleA4 = document.querySelector("div:nth-child(4) > aside");
@@ -112,7 +269,6 @@ function toggle1() {
 pawnB2.addEventListener("click", toggle1);
 
 // Pawn C2 Possible Moves:
-const pawnC2 = document.querySelector("div:nth-child(18) > svg");
 
 const possibleC3 = document.querySelector("div:nth-child(19) > aside");
 const possibleC4 = document.querySelector("div:nth-child(20) > aside");
@@ -126,8 +282,6 @@ pawnC2.addEventListener("click", toggle2);
 
 // Pawn D2 Possible Moves:
 
-const pawnD2 = document.querySelector("div:nth-child(26) > svg");
-
 const possibleD3 = document.querySelector("div:nth-child(27) > aside");
 const possibleD4 = document.querySelector("div:nth-child(28) > aside");
 
@@ -139,8 +293,6 @@ function toggle3() {
 pawnD2.addEventListener("click", toggle3);
 
 // Pawn E2 Possible Moves:
-
-const pawnE2 = document.querySelector("div:nth-child(34) > svg");
 
 const possibleE3 = document.querySelector("div:nth-child(35) > aside");
 const possibleE4 = document.querySelector("div:nth-child(36) > aside");
@@ -154,8 +306,6 @@ pawnE2.addEventListener("click", toggle4);
 
 // Pawn F2 Possible Moves:
 
-const pawnF2 = document.querySelector("div:nth-child(42) > svg");
-
 const possibleF3 = document.querySelector("div:nth-child(43) > aside");
 const possibleF4 = document.querySelector("div:nth-child(44) > aside");
 
@@ -168,8 +318,6 @@ pawnF2.addEventListener("click", toggle5);
 
 // Pawn G2 Possible Moves:
 
-const pawnG2 = document.querySelector("div:nth-child(50) > svg");
-
 const possibleG3 = document.querySelector("div:nth-child(51) > aside");
 const possibleG4 = document.querySelector("div:nth-child(52) > aside");
 
@@ -181,8 +329,6 @@ function toggle6() {
 pawnG2.addEventListener("click", toggle6);
 
 // Pawn H2 Possible Moves:
-
-const pawnH2 = document.querySelector("div:nth-child(58) > svg");
 
 const possibleH3 = document.querySelector("div:nth-child(59) > aside");
 const possibleH4 = document.querySelector("div:nth-child(60) > aside");
@@ -197,8 +343,6 @@ pawnH2.addEventListener("click", toggle7);
 // Knights
 // Knight B1 Possible Moves:
 
-const knightB1 = document.querySelector("div:nth-child(9) > svg");
-
 function toggle8() {
   possibleA3.classList.toggle("possiblemove");
   possibleC3.classList.toggle("possiblemove");
@@ -207,7 +351,6 @@ function toggle8() {
 knightB1.addEventListener("click", toggle8);
 
 //Knight G1 Possible Moves:
-const knightG1 = document.querySelector("div:nth-child(49) > svg");
 
 function toggle9() {
   possibleF3.classList.toggle("possiblemove");
