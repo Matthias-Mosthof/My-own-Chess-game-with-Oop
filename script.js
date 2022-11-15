@@ -93,6 +93,8 @@ const queenD1 = document.querySelector("#white-queen-d1");
 // König
 const kingE1 = document.querySelector("#white-king-e1");
 
+// Variablen für das State-Objekt generieren
+
 let moveCounter = 0;
 let whitePieceAmount = 16;
 let blackPieceAmount = 16;
@@ -103,6 +105,8 @@ let pieceIsActive = false;
 let currentPosition;
 let lastPosition;
 let currentMovedPiece;
+let currentActiveSide;
+let result;
 
 const state = {
   Start: [
@@ -129,6 +133,7 @@ const state = {
       currentMovedPiece: currentMovedPiece,
       pieceMovedFromPosition: lastPosition,
       pieceMovedToPosition: currentPosition,
+      currentActiveSide: currentActiveSide,
     },
   ],
   End: [
@@ -137,16 +142,82 @@ const state = {
       done: true,
       whitePieces: whitePieceAmount,
       blackPieces: blackPieceAmount,
+      result: result,
     },
   ],
 };
+
+// Klassen der Figuren deklarieren und definieren
+
+class Piece {
+  constructor(color, moveBehaviour) {
+    this.color = color;
+    this.moveBehaviour = moveBehaviour;
+  }
+  setMoveBehaviour(moveBehaviour) {
+    console.log(this.oveBehaviour);
+  }
+}
+
+class Pawn extends Piece {
+  constructor(color) {
+    super(color, "one up");
+  }
+}
+
+const whitePawn = new Pawn("white");
+console.log(whitePawn);
+
+class Rook extends Piece {
+  constructor(color) {
+    super(color, "n up, n left, n right over full Board");
+  }
+}
+
+const whiteRook = new Rook("white");
+console.log(whiteRook);
+
+class Knight extends Piece {
+  constructor(color) {
+    super(color, "two up or left or down or right, 1 left or right = L Shape");
+  }
+}
+const whiteKnight = new Knight("white");
+console.log(whiteKnight);
+
+class Bishop extends Piece {
+  constructor(color) {
+    super(color, "n Diagonalleft or n Diagonalright over full Board ");
+  }
+}
+const whiteBishop = new Bishop("white");
+console.log(whiteBishop);
+
+class Queen extends Piece {
+  constructor(color) {
+    super(
+      color,
+      "n Diagonalleft or n Diagonalright, n right, n left, n down, n up, over full Board"
+    );
+  }
+}
+const whiteQueen = new Queen("white");
+console.log(whiteQueen);
+
+class King extends Piece {
+  constructor(color) {
+    super(color, "one up, one down, one left, one right");
+  }
+}
+const whiteKing = new King("white");
+console.log(whiteKing);
 
 function renderMove() {
   //state.Start.forEach((move) => console.log(move));
 
   //state.betweenStartAndEnd.forEach((move) => console.log(move));
 
-  state.currentMove.forEach((move) => console.log(move));
+  //state.currentMove.forEach((move) => console.log(move));
 
   //state.End.forEach((move) => console.log(move));
 
