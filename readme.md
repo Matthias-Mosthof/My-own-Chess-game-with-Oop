@@ -31,6 +31,9 @@ etc.
 
 16.11.22: Adding a basic structure of Classes. One Main Class, each piece Typ inherits from the main class and brings its own propertys with it. (Move behaviour, Color...)
 
+16.11.22: Adding a function for the bishop which finds its Position automatically out.
+I found a pattern on the board. This pattern allows me to give me every Field which the bishop can "see" (Its allowed fields) so the function also puts every field which the bishop "sees" in an Array.
+
 ## Goal
 
 A fully working chess game with all its mechanics for 2 Players

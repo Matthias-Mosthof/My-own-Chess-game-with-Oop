@@ -64,6 +64,100 @@ const fieldh6 = document.querySelector("#field-h6");
 const fieldh7 = document.querySelector("#field-h7");
 const fieldh8 = document.querySelector("#field-h8");
 
+const chessBoard = [
+  fielda1,
+  fielda2,
+  fielda3,
+  fielda4,
+  fielda5,
+  fielda6,
+  fielda7,
+  fielda8,
+  fieldb1,
+  fieldb2,
+  fieldb3,
+  fieldb4,
+  fieldb5,
+  fieldb6,
+  fieldb7,
+  fieldb8,
+  fieldc1,
+  fieldc2,
+  fieldc3,
+  fieldc4,
+  fieldc5,
+  fieldc6,
+  fieldc7,
+  fieldc8,
+  fieldd1,
+  fieldd2,
+  fieldd3,
+  fieldd4,
+  fieldd5,
+  fieldd6,
+  fieldd7,
+  fieldd8,
+  fielde1,
+  fielde2,
+  fielde3,
+  fielde4,
+  fielde5,
+  fielde6,
+  fielde7,
+  fielde8,
+  fieldf1,
+  fieldf2,
+  fieldf3,
+  fieldf4,
+  fieldf5,
+  fieldf6,
+  fieldf7,
+  fieldf8,
+  fieldg1,
+  fieldg2,
+  fieldg3,
+  fieldg4,
+  fieldg5,
+  fieldg6,
+  fieldg7,
+  fieldg8,
+  fieldh1,
+  fieldh2,
+  fieldh3,
+  fieldh4,
+  fieldh5,
+  fieldh6,
+  fieldh7,
+  fieldh8,
+];
+
+function renderWhereIsBishop() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-bishop-f1") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  // Wo steht er
+  // Wieviele Felder sieht er (Anzahl)
+  // Welche Felder sieht er
+  let bishopSees = [];
+  // Was sieht Läufer nach oben links
+  for (let r = 7; r < 63; r = r + 7) {
+    bishopSees.push(chessBoard[fieldNumber - r]);
+  }
+  // Was sieht Läufer nach oben Rechts
+  for (let t = 9; t < 63; t = t + 9) {
+    bishopSees.push(chessBoard[fieldNumber + t]);
+  }
+  console.log(bishopSees);
+  console.log(currentPosition);
+  console.log(fieldNumber);
+}
+renderWhereIsBishop();
+
 // Alle weißen Figuren als Variable speichern
 // Bauern
 const pawnA2 = document.querySelector("#white-pawn-a2");
