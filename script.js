@@ -131,6 +131,7 @@ const chessBoard = [
   fieldh8,
 ];
 
+// Funktion die für den Läufer automatisch rausfindet wo er gerade ist und was er von seiner Position "sieht"
 function renderWhereIsBishop() {
   let currentPosition;
   let fieldNumber = 0;
@@ -146,14 +147,63 @@ function renderWhereIsBishop() {
   let bishopSees = [];
   // Was sieht Läufer nach oben links
   for (let r = 7; r < 63; r = r + 7) {
-    bishopSees.push(chessBoard[fieldNumber - r]);
+    if (chessBoard[fieldNumber - r] !== undefined) {
+      bishopSees.push(chessBoard[fieldNumber - r]);
+      if (
+        chessBoard[fieldNumber - r].attributes.class.textContent.slice(-1) ===
+        "8"
+      ) {
+        break;
+      }
+    }
   }
-  // Was sieht Läufer nach oben Rechts
-  for (let t = 9; t < 63; t = t + 9) {
-    bishopSees.push(chessBoard[fieldNumber + t]);
+  // Was sieht Läufer nach unten links
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let t = 9; t < 63; t = t + 9) {
+      if (chessBoard[fieldNumber - t] !== undefined) {
+        bishopSees.push(chessBoard[fieldNumber - t]);
+        if (
+          chessBoard[fieldNumber - t].attributes.class.textContent.slice(-1) ===
+          "1"
+        ) {
+          break;
+        }
+      }
+    }
   }
+
+  // Was sieht Läufer nach unten rechts
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let d = 7; d < 63; d = d + 7) {
+      if (chessBoard[fieldNumber + d] !== undefined) {
+        bishopSees.push(chessBoard[fieldNumber + d]);
+        if (
+          chessBoard[fieldNumber + d].attributes.class.textContent.slice(-1) ===
+          "1"
+        ) {
+          break;
+        }
+      }
+    }
+  }
+  // Was sieht Läufer nach oben rechts
+
+  for (let u = 9; u < 63; u = u + 9) {
+    if (chessBoard[fieldNumber + u] !== undefined) {
+      bishopSees.push(chessBoard[fieldNumber + u]);
+
+      if (
+        chessBoard[fieldNumber + u].attributes.class.textContent.slice(-1) ===
+        "8"
+      ) {
+        break;
+      }
+    }
+  }
+
+  //bishopSees.sort();
   console.log(bishopSees);
-  console.log(currentPosition);
+  console.log(currentPosition.attributes.class);
   console.log(fieldNumber);
 }
 renderWhereIsBishop();
@@ -332,8 +382,8 @@ function renderMove() {
     //moveCounter++;
   }
 
-  console.log(state.betweenStartAndEnd[0]);
-  console.log(state.currentMove[0]);
+  //console.log(state.betweenStartAndEnd[0]);
+  //console.log(state.currentMove[0]);
 }
 renderMove();
 
