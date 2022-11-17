@@ -8,6 +8,8 @@
   --main-color: rgb(90, 57, 11);
   --second-color: rgb(255, 233, 143);
   background-color: black;
+  --inset-color: inset 0 0 1em rgb(0, 235, 102), inset 0 0 1em #cde,
+    inset 0 0 1em #cde;
 }
 
 /* The Chess Board Layout */
@@ -61,6 +63,7 @@
   border: 2px solid black;
   color: rgb(147, 139, 139);
   position: relative;
+  background-color: ;
 }
 
 .a1 {

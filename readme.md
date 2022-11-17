@@ -31,8 +31,10 @@ etc.
 
 16.11.22: Adding a basic structure of Classes. One Main Class, each piece Typ inherits from the main class and brings its own propertys with it. (Move behaviour, Color...)
 
-16.11.22: Adding a function for the bishop which finds its Position automatically out.
-I found a pattern on the board. This pattern allows me to give me every Field which the bishop can "see" (Its allowed fields) so the function also puts every field which the bishop "sees" in an Array.
+16.11.22: Adding a function for the bishop which finds its Position automatically.
+With the pattern I found in the Board it allows me to give me every Field which the bishop can "see" (Its allowed fields) so the function also puts every field which the bishop "sees" in an Array.
+
+17.11.22: Extending the function where each pieces Position is found automatically and the function which saves all Fields apiece can see - for each Piece. (Pawn, Bishop, Knight, Queen, King, Rook)
 
 ## Goal
 

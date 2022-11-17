@@ -64,6 +64,9 @@ const fieldh6 = document.querySelector("#field-h6");
 const fieldh7 = document.querySelector("#field-h7");
 const fieldh8 = document.querySelector("#field-h8");
 
+const insetColorMovePossibilty =
+  "inset 0 0 1em rgb(0, 235, 102), inset 0 0 1em #cde, inset 0 0 1em #cde";
+
 const chessBoard = [
   fielda1,
   fielda2,
@@ -132,7 +135,7 @@ const chessBoard = [
 ];
 
 // Funktion die für den Läufer automatisch rausfindet wo er gerade ist und was er von seiner Position "sieht"
-function renderWhereIsBishop() {
+function renderWhereIsBishopF1() {
   let currentPosition;
   let fieldNumber = 0;
   for (let i = 0; i < chessBoard.length; i++) {
@@ -145,15 +148,18 @@ function renderWhereIsBishop() {
   // Wieviele Felder sieht er (Anzahl)
   // Welche Felder sieht er
   let bishopSees = [];
+
   // Was sieht Läufer nach oben links
-  for (let r = 7; r < 63; r = r + 7) {
-    if (chessBoard[fieldNumber - r] !== undefined) {
-      bishopSees.push(chessBoard[fieldNumber - r]);
-      if (
-        chessBoard[fieldNumber - r].attributes.class.textContent.slice(-1) ===
-        "8"
-      ) {
-        break;
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "8") {
+    for (let r = 7; r < 63; r = r + 7) {
+      if (chessBoard[fieldNumber - r] !== undefined) {
+        bishopSees.push(chessBoard[fieldNumber - r]);
+        if (
+          chessBoard[fieldNumber - r].attributes.class.textContent.slice(-1) ===
+          "8"
+        ) {
+          break;
+        }
       }
     }
   }
@@ -187,26 +193,524 @@ function renderWhereIsBishop() {
     }
   }
   // Was sieht Läufer nach oben rechts
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let u = 9; u < 63; u = u + 9) {
+      if (chessBoard[fieldNumber + u] !== undefined) {
+        bishopSees.push(chessBoard[fieldNumber + u]);
 
-  for (let u = 9; u < 63; u = u + 9) {
-    if (chessBoard[fieldNumber + u] !== undefined) {
-      bishopSees.push(chessBoard[fieldNumber + u]);
+        if (
+          chessBoard[fieldNumber + u].attributes.class.textContent.slice(-1) ===
+          "8"
+        ) {
+          break;
+        }
+      }
+    }
+  }
 
+  //bishopSees.sort();
+  //console.log(bishopSees);
+  //console.log(currentPosition.attributes.class);
+  //console.log(fieldNumber);
+}
+renderWhereIsBishopF1();
+
+function renderWhereIsRookH1() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-rook-h1") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  // Wo steht er
+  // Wieviele Felder sieht er (Anzahl)
+  // Welche Felder sieht er
+  let rookSees = [];
+  // Was sieht Turm nach oben
+  for (let r = 1; r < 8; r++) {
+    if (chessBoard[fieldNumber + r] !== undefined) {
+      rookSees.push(chessBoard[fieldNumber + r]);
       if (
-        chessBoard[fieldNumber + u].attributes.class.textContent.slice(-1) ===
+        chessBoard[fieldNumber + r].attributes.class.textContent.slice(-1) ===
         "8"
       ) {
         break;
       }
     }
   }
+  // Was sieht Turm nach unten
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let t = 1; t < 8; t++) {
+      if (chessBoard[fieldNumber - t] !== undefined) {
+        rookSees.push(chessBoard[fieldNumber - t]);
+        if (
+          chessBoard[fieldNumber - t].attributes.class.textContent.slice(-1) ===
+          "1"
+        ) {
+          break;
+        }
+      }
+    }
+  }
 
-  //bishopSees.sort();
-  console.log(bishopSees);
-  console.log(currentPosition.attributes.class);
-  console.log(fieldNumber);
+  // Was sieht Turm nach rechts
+
+  for (let d = 8; d < 64; d = d + 8) {
+    if (chessBoard[fieldNumber + d] !== undefined) {
+      rookSees.push(chessBoard[fieldNumber + d]);
+    }
+  }
+  // Was sieht Turm nach links
+
+  for (let u = 8; u < 64; u = u + 8) {
+    if (chessBoard[fieldNumber - u] !== undefined) {
+      rookSees.push(chessBoard[fieldNumber - u]);
+
+      if (
+        chessBoard[fieldNumber - u].attributes.class.textContent.slice(-1) ===
+        "8"
+      ) {
+        break;
+      }
+    }
+  }
+  //console.log(rookSees);
+  //console.log(currentPosition.attributes.class);
+  //console.log(fieldNumber);
 }
-renderWhereIsBishop();
+renderWhereIsRookH1();
+
+function renderWhereIsKnightG1() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-knight-g1") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  // Wo steht er
+  // Wieviele Felder sieht er (Anzahl)
+  // Welche Felder sieht er
+  let knightSees = [];
+  // Was sieht Springer nach oben links und unten rechts
+  for (let r = 6; r < 12; r = 6 + 6) {
+    if (
+      chessBoard[fieldNumber - r] !== undefined &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "7" &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+    ) {
+      knightSees.push(chessBoard[fieldNumber - r]);
+    }
+    if (
+      chessBoard[fieldNumber + r] !== undefined &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "2"
+    ) {
+      knightSees.push(chessBoard[fieldNumber + r]);
+    }
+  }
+  // Was sieht Springer nach unten links und oben rechts
+
+  for (let t = 10; t < 20; t = 10 + 10) {
+    if (
+      chessBoard[fieldNumber - t] !== undefined &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "2"
+    ) {
+      knightSees.push(chessBoard[fieldNumber - t]);
+    }
+    if (
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "7" &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "8" &&
+      chessBoard[fieldNumber + t] !== undefined
+    ) {
+      console.log("hello");
+      knightSees.push(chessBoard[fieldNumber + t]);
+    }
+  }
+
+  // Was sieht Springer nach links links oben und rechts rechts unten
+
+  for (let d = 15; d < 30; d = 15 + 15) {
+    if (
+      chessBoard[fieldNumber - d] !== undefined &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+    ) {
+      knightSees.push(chessBoard[fieldNumber - d]);
+    }
+
+    //) {
+
+    if (
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+      chessBoard[fieldNumber + d] !== undefined
+    ) {
+      knightSees.push(chessBoard[fieldNumber + d]);
+    }
+  }
+
+  // Was sieht Springer nach links links unten und rechts rechts oben
+
+  for (let u = 17; u < 34; u = u + 17) {
+    console.log("hello");
+    if (
+      chessBoard[fieldNumber + u] !== undefined &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+    ) {
+      //
+      knightSees.push(chessBoard[fieldNumber + u]);
+    }
+    if (
+      chessBoard[fieldNumber - u] !== undefined &&
+      currentPosition.attributes.class.nodeValue.slice(-1) !== "1"
+    ) {
+      knightSees.push(chessBoard[fieldNumber - u]);
+    }
+  }
+
+  //console.log(knightSees);
+  //console.log(currentPosition.attributes.class);
+  //console.log(fieldNumber);
+}
+
+renderWhereIsKnightG1();
+
+function renderWhereIsQueenD1() {
+  let currentPosition;
+  let fieldNumber = 0;
+  let queenSees = [];
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-queen-d1") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  for (let r = 1; r < 8; r++) {
+    if (chessBoard[fieldNumber + r] !== undefined) {
+      queenSees.push(chessBoard[fieldNumber + r]);
+      if (
+        chessBoard[fieldNumber + r].attributes.class.textContent.slice(-1) ===
+        "8"
+      ) {
+        break;
+      }
+    }
+  }
+  // Was sieht Dame nach unten
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let t = 1; t < 8; t++) {
+      if (chessBoard[fieldNumber - t] !== undefined) {
+        queenSees.push(chessBoard[fieldNumber - t]);
+        if (
+          chessBoard[fieldNumber - t].attributes.class.textContent.slice(-1) ===
+          "1"
+        ) {
+          break;
+        }
+      }
+    }
+  }
+
+  // Was sieht Dame nach rechts
+
+  for (let d = 8; d < 64; d = d + 8) {
+    if (chessBoard[fieldNumber + d] !== undefined) {
+      queenSees.push(chessBoard[fieldNumber + d]);
+    }
+  }
+  // Was sieht Dame nach links
+
+  for (let u = 8; u < 64; u = u + 8) {
+    if (chessBoard[fieldNumber - u] !== undefined) {
+      queenSees.push(chessBoard[fieldNumber - u]);
+
+      if (
+        chessBoard[fieldNumber - u].attributes.class.textContent.slice(-1) ===
+        "8"
+      ) {
+        break;
+      }
+    }
+  }
+  // Was sieht Dame nach oben links
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "8") {
+    for (let r = 7; r < 63; r = r + 7) {
+      if (chessBoard[fieldNumber - r] !== undefined) {
+        queenSees.push(chessBoard[fieldNumber - r]);
+        if (
+          chessBoard[fieldNumber - r].attributes.class.textContent.slice(-1) ===
+          "8"
+        ) {
+          break;
+        }
+      }
+    }
+  }
+  // Was sieht Dame nach unten links
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let t = 9; t < 63; t = t + 9) {
+      if (chessBoard[fieldNumber - t] !== undefined) {
+        queenSees.push(chessBoard[fieldNumber - t]);
+        if (
+          chessBoard[fieldNumber - t].attributes.class.textContent.slice(-1) ===
+          "1"
+        ) {
+          break;
+        }
+      }
+    }
+  }
+
+  // Was sieht Dame nach unten rechts
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "1") {
+    for (let d = 7; d < 63; d = d + 7) {
+      if (chessBoard[fieldNumber + d] !== undefined) {
+        queenSees.push(chessBoard[fieldNumber + d]);
+        if (
+          chessBoard[fieldNumber + d].attributes.class.textContent.slice(-1) ===
+          "1"
+        ) {
+          break;
+        }
+      }
+    }
+  }
+  // Was sieht Dame nach oben rechts
+  if (currentPosition.attributes.class.nodeValue.slice(-1) !== "8") {
+    for (let u = 9; u < 63; u = u + 9) {
+      if (chessBoard[fieldNumber + u] !== undefined) {
+        queenSees.push(chessBoard[fieldNumber + u]);
+
+        if (
+          chessBoard[fieldNumber + u].attributes.class.textContent.slice(-1) ===
+          "8"
+        ) {
+          break;
+        }
+      }
+    }
+  }
+
+  //console.log(queenSees);
+  //console.log(currentPosition);
+}
+
+renderWhereIsQueenD1();
+
+function renderWhereIsKingE1() {
+  let currentPosition;
+  let fieldNumber = 0;
+  let kingSees = [];
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-king-e1") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+
+  // Was King nach oben sieht
+
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8" &&
+    chessBoard[fieldNumber + 1] !== undefined
+  ) {
+    kingSees.push(chessBoard[fieldNumber + 1]);
+  }
+  // Was King nach unten sieht
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    chessBoard[fieldNumber - 1] !== undefined
+  ) {
+    kingSees.push(chessBoard[fieldNumber - 1]);
+  }
+  // Was King nach links sieht
+  if (chessBoard[fieldNumber - 8] !== undefined) {
+    kingSees.push(chessBoard[fieldNumber - 8]);
+  }
+  // Was King nach rechts sieht
+  if (chessBoard[fieldNumber + 8] !== undefined) {
+    kingSees.push(chessBoard[fieldNumber + 8]);
+  }
+  // Was King nach oben rechts sieht
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8" &&
+    chessBoard[fieldNumber + 9] !== undefined
+  ) {
+    kingSees.push(chessBoard[fieldNumber + 9]);
+  }
+  // Was King nach oben links sieht
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8" &&
+    chessBoard[fieldNumber - 7] !== undefined
+  ) {
+    kingSees.push(chessBoard[fieldNumber - 7]);
+  }
+  // Was King nach unten links sieht
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    chessBoard[fieldNumber - 9] !== undefined
+  ) {
+    kingSees.push(chessBoard[fieldNumber - 9]);
+  }
+  // Was King nach unten rechts sieht
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    chessBoard[fieldNumber + 7] !== undefined
+  ) {
+    kingSees.push(chessBoard[fieldNumber + 7]);
+  }
+  //console.log(kingSees);
+  //console.log(fieldNumber);
+}
+
+renderWhereIsKingE1();
+function renderWhereIsPawnA2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  let pawnSees = [];
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-a2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+
+function renderWhereIsPawnB2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-b2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+
+function renderWhereIsPawnC2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  let pawnSees = [];
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-c2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+
+function renderWhereIsPawnD2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-d2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+
+function renderWhereIsPawnE2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-e2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+function renderWhereIsPawnF2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-f2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+function renderWhereIsPawnG2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-g2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+function renderWhereIsPawnH2() {
+  let currentPosition;
+  let fieldNumber = 0;
+  for (let i = 0; i < chessBoard.length; i++) {
+    if (chessBoard[i].children[0].attributes.id.value === "white-pawn-h2") {
+      currentPosition = chessBoard[i];
+      fieldNumber = i;
+    }
+  }
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    pawnSees: [],
+  };
+}
+
+function whatAnyPawnSees(style) {
+  let { currentPosition, fieldNumber, pawnSees } = renderWhereIsPawnB2();
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+  ) {
+    pawnSees.push(chessBoard[fieldNumber + 1]);
+  }
+  //return pawnSees;
+  console.log(currentPosition);
+  for (i in pawnSees) {
+    pawnSees[i].style.boxShadow = `${insetColorMovePossibilty}`;
+    if (style.length > 1) {
+      pawnSees[i].style.boxShadow = "none";
+    }
+  }
+}
 
 // Alle weißen Figuren als Variable speichern
 // Bauern
@@ -385,6 +889,7 @@ function renderMove() {
   //console.log(state.betweenStartAndEnd[0]);
   //console.log(state.currentMove[0]);
 }
+
 renderMove();
 
 // Funktion um true oder false auszugeben wenn Figur geklickt wird
@@ -402,25 +907,30 @@ function pieceDeactivateActivate() {
 
 pawnB2.addEventListener("click", () => {
   pieceDeactivateActivate();
+
   let parent = pawnB2.parentElement;
+  console.log(pieceIsActive);
   if (pieceIsActive === true) {
-    fieldb3.addEventListener("click", () => {
-      clickCounter = 0;
-      clickCounter++;
-      if (clickCounter === 1) {
-        possibleB3.style.width = "0px";
-        possibleB4.style.width = "0px";
-        state.currentMove[0].pieceMovedToPosition = "fieldb3";
-        state.currentMove[0].currentMovedPiece = pawnB2;
-        state.betweenStartAndEnd[0].moveAmount = moveCounter;
-        state.currentMove[0].lastMovedSide = "White";
-        state.currentMove[0].pieceMovedFromPosition = parent;
-        renderMove();
-        clickCounter--;
-        return;
-      }
-    });
+    whatAnyPawnSees();
+  } else {
+    whatAnyPawnSees("none");
   }
+
+  fieldb3.addEventListener("click", () => {
+    clickCounter = 0;
+    clickCounter++;
+
+    if (clickCounter === 1) {
+      state.currentMove[0].pieceMovedToPosition = "fieldb3";
+      state.currentMove[0].currentMovedPiece = pawnB2;
+      state.betweenStartAndEnd[0].moveAmount = moveCounter;
+      state.currentMove[0].lastMovedSide = "White";
+      state.currentMove[0].pieceMovedFromPosition = parent;
+      renderMove();
+      clickCounter--;
+      return;
+    }
+  });
 });
 
 pawnC2.addEventListener("click", () => {
