@@ -37,6 +37,10 @@ With the pattern I found in the Board it allows me to give me every Field which 
 17.11.22: Extending the function where each pieces Position is found automatically and the function which saves all Fields apiece can see - for each Piece. (Pawn, Bishop, Knight, Queen, King, Rook).
 Sidenode: Knights can not only be tricky in the actual game....
 
+18.11.22: Adding dynamic EventListener for PawnB2. Each possible move is now clickable, if clicked, the Piece moves to selected Position. (In this state only for Pawn B2)
+
+-> This also saved ~ 600 Lines of code where every possible move was hardcodet.
+
 ## Goal
 
 A fully working chess game with all its mechanics for 2 Players
