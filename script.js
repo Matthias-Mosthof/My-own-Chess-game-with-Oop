@@ -1,5 +1,5 @@
 // Jedes Feld als Variable speichern
-const fielda1 = document.querySelector("#field-a1");
+/*const fielda1 = document.querySelector("#field-a1");
 const fielda2 = document.querySelector("#field-a2");
 const fielda3 = document.querySelector("#field-a3");
 const fielda4 = document.querySelector("#field-a4");
@@ -62,77 +62,23 @@ const fieldh4 = document.querySelector("#field-h4");
 const fieldh5 = document.querySelector("#field-h5");
 const fieldh6 = document.querySelector("#field-h6");
 const fieldh7 = document.querySelector("#field-h7");
-const fieldh8 = document.querySelector("#field-h8");
+const fieldh8 = document.querySelector("#field-h8");*/
 
 const insetColorMovePossibilty =
   "inset 0 0 1em rgb(0, 235, 102), inset 0 0 1em #cde, inset 0 0 1em #cde";
 
-const chessBoard = [
-  fielda1,
-  fielda2,
-  fielda3,
-  fielda4,
-  fielda5,
-  fielda6,
-  fielda7,
-  fielda8,
-  fieldb1,
-  fieldb2,
-  fieldb3,
-  fieldb4,
-  fieldb5,
-  fieldb6,
-  fieldb7,
-  fieldb8,
-  fieldc1,
-  fieldc2,
-  fieldc3,
-  fieldc4,
-  fieldc5,
-  fieldc6,
-  fieldc7,
-  fieldc8,
-  fieldd1,
-  fieldd2,
-  fieldd3,
-  fieldd4,
-  fieldd5,
-  fieldd6,
-  fieldd7,
-  fieldd8,
-  fielde1,
-  fielde2,
-  fielde3,
-  fielde4,
-  fielde5,
-  fielde6,
-  fielde7,
-  fielde8,
-  fieldf1,
-  fieldf2,
-  fieldf3,
-  fieldf4,
-  fieldf5,
-  fieldf6,
-  fieldf7,
-  fieldf8,
-  fieldg1,
-  fieldg2,
-  fieldg3,
-  fieldg4,
-  fieldg5,
-  fieldg6,
-  fieldg7,
-  fieldg8,
-  fieldh1,
-  fieldh2,
-  fieldh3,
-  fieldh4,
-  fieldh5,
-  fieldh6,
-  fieldh7,
-  fieldh8,
-];
+const chessBoard = [];
+const fields = ["a", "b", "c", "d", "e", "f", "g", "h"];
+
+fields.forEach((char) => {
+  let start = 1;
+  while (start <= 8) {
+    chessBoard.push(document.querySelector("#field-" + char + start));
+    start++;
+  }
+});
+
+console.log("1", chessBoard);
 
 // Funktion die für den Läufer automatisch rausfindet wo er gerade ist und was er von seiner Position "sieht"
 function renderWhereIsBishopF1() {
@@ -501,8 +447,8 @@ function renderWhereIsQueenD1() {
     }
   }
 
-  //console.log(queenSees);
-  //console.log(currentPosition);
+  console.log(queenSees);
+  console.log(currentPosition);
 }
 
 renderWhereIsQueenD1();
@@ -727,7 +673,6 @@ function whatAnyPawnSees(style) {
   ) {
     pawnSees.push(chessBoard[fieldNumber + 1]);
   }
-  //return pawnSees;
   for (i in pawnSees) {
     pawnSees[i].style.boxShadow = `${insetColorMovePossibilty}`;
     if (style === "none") {
@@ -779,10 +724,20 @@ let currentPosition;
 let lastPosition;
 let currentMovedPiece;
 let currentActiveSide;
-//let lastPossibleMoves = [];
 let result;
 
 const state = {
+  /*Pieces: {
+    pawns: {
+      initialFields: ["a2", "b2", "c2",],
+      items: []
+    },
+    knights: [],
+    bishop: [],
+    rooks: [],
+    queen: [],
+    king: [],
+  },*/
   Start: [
     {
       move: 0,
@@ -802,12 +757,12 @@ const state = {
   ],
   currentMove: [
     {
-      lastMovedPiece: lastMovedPiece,
-      lastMovedSide: lastMovedSide,
-      currentMovedPiece: currentMovedPiece,
+      lastMovedPiece,
+      lastMovedSide,
+      currentMovedPiece,
       pieceMovedFromPosition: lastPosition,
       pieceMovedToPosition: currentPosition,
-      currentActiveSide: currentActiveSide,
+      currentActiveSide,
       lastPossibleMoves: [],
     },
   ],
@@ -831,17 +786,27 @@ class Piece {
   }
   setMoveBehaviour(moveBehaviour) {
     console.log(this.oveBehaviour);
+    // throw new Error("You need to implement this method");
   }
+}
+
+class moveBehaviour {}
+class OneUpMoveBehaviour extends moveBehaviour {
+  move() {}
 }
 
 class Pawn extends Piece {
   constructor(color) {
-    super(color, "one up");
+    super(color, new OneUpMoveBehaviour());
+    console.log(this.moveBehaviour.move());
+  }
+  setMoveBehaviour(moveBehaviour) {
+    // console.log(this.oveBehaviour);
   }
 }
 
 const whitePawn = new Pawn("white");
-console.log(whitePawn);
+//console.log(whitePawn);
 
 class Rook extends Piece {
   constructor(color) {
@@ -850,7 +815,7 @@ class Rook extends Piece {
 }
 
 const whiteRook = new Rook("white");
-console.log(whiteRook);
+//console.log(whiteRook);
 
 class Knight extends Piece {
   constructor(color) {
@@ -858,7 +823,7 @@ class Knight extends Piece {
   }
 }
 const whiteKnight = new Knight("white");
-console.log(whiteKnight);
+//console.log(whiteKnight);
 
 class Bishop extends Piece {
   constructor(color) {
@@ -866,7 +831,7 @@ class Bishop extends Piece {
   }
 }
 const whiteBishop = new Bishop("white");
-console.log(whiteBishop);
+//console.log(whiteBishop);
 
 class Queen extends Piece {
   constructor(color) {
@@ -877,7 +842,7 @@ class Queen extends Piece {
   }
 }
 const whiteQueen = new Queen("white");
-console.log(whiteQueen);
+//console.log(whiteQueen);
 
 class King extends Piece {
   constructor(color) {
@@ -885,7 +850,6 @@ class King extends Piece {
   }
 }
 const whiteKing = new King("white");
-console.log(whiteKing);
 
 function renderMove() {
   //state.Start.forEach((move) => console.log(move));
@@ -902,8 +866,9 @@ function renderMove() {
   //console.log(allPossibleMovesBeforeNewPosition[0].style);
 
   let positionNow = state.currentMove[0].pieceMovedToPosition;
-  console.log(positionNow);
   let pieceNow = state.currentMove[0].currentMovedPiece;
+
+  console.log(state);
 
   if (positionNow === "field-b3") {
     //allPossibleMovesBeforeNewPosition[0].style.boxShadow = "none";
@@ -955,7 +920,7 @@ pawnB2.addEventListener("click", () => {
   let pieceIsActive = pieceDeactivateActivate();
   let pawnSees = whatAnyPawnSees();
   let parent = pawnB2.parentElement;
-  console.log(pieceIsActive);
+
   if (pieceIsActive === true) {
     whatAnyPawnSees();
   } else {
@@ -964,7 +929,7 @@ pawnB2.addEventListener("click", () => {
   for (let i = 0; i < pawnSees.length; i++) {
     pawnSees[i].addEventListener("click", () => {
       //if (clickCounter === 1) {
-      console.log(pawnSees);
+
       state.currentMove[0].pieceMovedToPosition =
         pawnSees[i].attributes[1].value;
       state.currentMove[0].currentMovedPiece = pawnB2;
@@ -976,47 +941,4 @@ pawnB2.addEventListener("click", () => {
       //}
     });
   }
-  /*
-  fieldb4.addEventListener("click", () => {
-    if (clickCounter === 1) {
-      state.currentMove[0].pieceMovedToPosition = "fieldb4";
-      state.currentMove[0].currentMovedPiece = pawnB2;
-      state.betweenStartAndEnd[0].moveAmount = moveCounter;
-      state.currentMove[0].lastMovedSide = "White";
-      state.currentMove[0].pieceMovedFromPosition = parent;
-      renderMove();
-    }
-  });*/
 });
-
-pawnC2.addEventListener("click", () => {
-  pieceDeactivateActivate();
-  let parent = pawnC2.parentElement;
-  if (pieceIsActive === true) {
-    fieldc3.addEventListener("click", () => {
-      state.currentMove[0].pieceMovedToPosition = "fieldc3";
-      writeMoveToObjectPawnC2();
-    });
-
-    fieldc4.addEventListener("click", () => {
-      state.currentMove[0].pieceMovedToPosition = "fieldc4";
-      writeMoveToObjectPawnC2();
-    });
-  }
-});
-
-function writeMoveToObjectPawnC2() {
-  clickCounter = 0;
-  clickCounter++;
-  if (clickCounter === 1) {
-    possibleC3.style.width = "0px";
-    possibleC4.style.width = "0px";
-    state.currentMove[0].currentMovedPiece = pawnC2;
-    state.betweenStartAndEnd[0].moveAmount = moveCounter;
-    state.currentMove[0].lastMovedSide = "White";
-    state.currentMove[0].pieceMovedFromPosition = parent;
-    renderMove();
-    clickCounter--;
-    return moveCounter;
-  }
-}
