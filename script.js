@@ -1,72 +1,4 @@
-// Jedes Feld als Variable speichern
-/*const fielda1 = document.querySelector("#field-a1");
-const fielda2 = document.querySelector("#field-a2");
-const fielda3 = document.querySelector("#field-a3");
-const fielda4 = document.querySelector("#field-a4");
-const fielda5 = document.querySelector("#field-a5");
-const fielda6 = document.querySelector("#field-a6");
-const fielda7 = document.querySelector("#field-a7");
-const fielda8 = document.querySelector("#field-a8");
-const fieldb1 = document.querySelector("#field-b1");
-const fieldb2 = document.querySelector("#field-b2");
-const fieldb3 = document.querySelector("#field-b3");
-const fieldb4 = document.querySelector("#field-b4");
-const fieldb5 = document.querySelector("#field-b5");
-const fieldb6 = document.querySelector("#field-b6");
-const fieldb7 = document.querySelector("#field-b7");
-const fieldb8 = document.querySelector("#field-b8");
-const fieldc1 = document.querySelector("#field-c1");
-const fieldc2 = document.querySelector("#field-c2");
-const fieldc3 = document.querySelector("#field-c3");
-const fieldc4 = document.querySelector("#field-c4");
-const fieldc5 = document.querySelector("#field-c5");
-const fieldc6 = document.querySelector("#field-c6");
-const fieldc7 = document.querySelector("#field-c7");
-const fieldc8 = document.querySelector("#field-c8");
-const fieldd1 = document.querySelector("#field-d1");
-const fieldd2 = document.querySelector("#field-d2");
-const fieldd3 = document.querySelector("#field-d3");
-const fieldd4 = document.querySelector("#field-d4");
-const fieldd5 = document.querySelector("#field-d5");
-const fieldd6 = document.querySelector("#field-d6");
-const fieldd7 = document.querySelector("#field-d7");
-const fieldd8 = document.querySelector("#field-d8");
-const fielde1 = document.querySelector("#field-e1");
-const fielde2 = document.querySelector("#field-e2");
-const fielde3 = document.querySelector("#field-e3");
-const fielde4 = document.querySelector("#field-e4");
-const fielde5 = document.querySelector("#field-e5");
-const fielde6 = document.querySelector("#field-e6");
-const fielde7 = document.querySelector("#field-e7");
-const fielde8 = document.querySelector("#field-e8");
-const fieldf1 = document.querySelector("#field-f1");
-const fieldf2 = document.querySelector("#field-f2");
-const fieldf3 = document.querySelector("#field-f3");
-const fieldf4 = document.querySelector("#field-f4");
-const fieldf5 = document.querySelector("#field-f5");
-const fieldf6 = document.querySelector("#field-f6");
-const fieldf7 = document.querySelector("#field-f7");
-const fieldf8 = document.querySelector("#field-f8");
-const fieldg1 = document.querySelector("#field-g1");
-const fieldg2 = document.querySelector("#field-g2");
-const fieldg3 = document.querySelector("#field-g3");
-const fieldg4 = document.querySelector("#field-g4");
-const fieldg5 = document.querySelector("#field-g5");
-const fieldg6 = document.querySelector("#field-g6");
-const fieldg7 = document.querySelector("#field-g7");
-const fieldg8 = document.querySelector("#field-g8");
-const fieldh1 = document.querySelector("#field-h1");
-const fieldh2 = document.querySelector("#field-h2");
-const fieldh3 = document.querySelector("#field-h3");
-const fieldh4 = document.querySelector("#field-h4");
-const fieldh5 = document.querySelector("#field-h5");
-const fieldh6 = document.querySelector("#field-h6");
-const fieldh7 = document.querySelector("#field-h7");
-const fieldh8 = document.querySelector("#field-h8");*/
-
-const insetColorMovePossibilty =
-  "inset 0 0 1em rgb(0, 235, 102), inset 0 0 1em #cde, inset 0 0 1em #cde";
-
+// Funktion die jedes Feld auf dem Chessboard als Variable in einem Array speichert
 const chessBoard = [];
 const fields = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
@@ -244,87 +176,92 @@ function renderWhereIsKnightG1() {
       }
     }
   }
-  // Wo steht er
-  // Wieviele Felder sieht er (Anzahl)
-  // Welche Felder sieht er
-  let knightSees = [];
+  return {
+    currentPosition: currentPosition,
+    fieldNumber: fieldNumber,
+    knightSees: [],
+  };
+}
+
+renderWhereIsKnightG1();
+// Wo steht er
+// Wieviele Felder sieht er (Anzahl)
+// Welche Felder sieht er
+function whatAnyKnightSees(style) {
+  let { currentPosition, fieldNumber, knightSees } = renderWhereIsKnightG1();
   // Was sieht Springer nach oben links und unten rechts
-  for (let r = 6; r < 12; r = 6 + 6) {
-    if (
-      chessBoard[fieldNumber - r] !== undefined &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "7" &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
-    ) {
-      knightSees.push(chessBoard[fieldNumber - r]);
-    }
-    if (
-      chessBoard[fieldNumber + r] !== undefined &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "2"
-    ) {
-      knightSees.push(chessBoard[fieldNumber + r]);
-    }
+  if (
+    chessBoard[fieldNumber - 6] !== undefined &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "7" &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+  ) {
+    knightSees.push(chessBoard[fieldNumber - 6]);
   }
+  if (
+    chessBoard[fieldNumber + 6] !== undefined &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "2"
+  ) {
+    knightSees.push(chessBoard[fieldNumber + 6]);
+  }
+
   // Was sieht Springer nach unten links und oben rechts
 
-  for (let t = 10; t < 20; t = 10 + 10) {
-    if (
-      chessBoard[fieldNumber - t] !== undefined &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "2"
-    ) {
-      knightSees.push(chessBoard[fieldNumber - t]);
-    }
-    if (
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "7" &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "8" &&
-      chessBoard[fieldNumber + t] !== undefined
-    ) {
-      knightSees.push(chessBoard[fieldNumber + t]);
-    }
+  if (
+    chessBoard[fieldNumber - 10] !== undefined &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "2"
+  ) {
+    knightSees.push(chessBoard[fieldNumber - 10]);
+  }
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "7" &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8" &&
+    chessBoard[fieldNumber + 10] !== undefined
+  ) {
+    knightSees.push(chessBoard[fieldNumber + 10]);
   }
 
   // Was sieht Springer nach links links oben und rechts rechts unten
 
-  for (let d = 15; d < 30; d = 15 + 15) {
-    if (
-      chessBoard[fieldNumber - d] !== undefined &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
-    ) {
-      knightSees.push(chessBoard[fieldNumber - d]);
-    }
+  if (
+    chessBoard[fieldNumber - 15] !== undefined &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+  ) {
+    knightSees.push(chessBoard[fieldNumber - 15]);
+  }
 
-    //) {
-
-    if (
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
-      chessBoard[fieldNumber + d] !== undefined
-    ) {
-      knightSees.push(chessBoard[fieldNumber + d]);
-    }
+  if (
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
+    chessBoard[fieldNumber + 15] !== undefined
+  ) {
+    knightSees.push(chessBoard[fieldNumber + 15]);
   }
 
   // Was sieht Springer nach links links unten und rechts rechts oben
 
-  for (let u = 17; u < 34; u = u + 17) {
-    if (
-      chessBoard[fieldNumber + u] !== undefined &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
-    ) {
-      //
-      knightSees.push(chessBoard[fieldNumber + u]);
-    }
-    if (
-      chessBoard[fieldNumber - u] !== undefined &&
-      currentPosition.attributes.class.nodeValue.slice(-1) !== "1"
-    ) {
-      knightSees.push(chessBoard[fieldNumber - u]);
+  if (
+    chessBoard[fieldNumber + 17] !== undefined &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
+  ) {
+    //
+    knightSees.push(chessBoard[fieldNumber + 17]);
+  }
+  if (
+    chessBoard[fieldNumber - 17] !== undefined &&
+    currentPosition.attributes.class.nodeValue.slice(-1) !== "1"
+  ) {
+    knightSees.push(chessBoard[fieldNumber - 17]);
+  }
+  console.log(knightSees);
+
+  for (i in knightSees) {
+    knightSees[i].style.boxShadow = `${insetColorMovePossibilty}`;
+    if (style === "none") {
+      knightSees[i].style.boxShadow = "none";
     }
   }
-
-  //console.log(knightSees);
-  //console.log(currentPosition.attributes.class);
-  //console.log(fieldNumber);
+  return knightSees;
 }
 
 renderWhereIsKnightG1();
@@ -711,6 +648,9 @@ const queenD1 = document.querySelector("#white-queen-d1");
 // König
 const kingE1 = document.querySelector("#white-king-e1");
 
+const insetColorMovePossibilty =
+  "inset 0 0 1em rgb(0, 235, 102), inset 0 0 1em #cde, inset 0 0 1em #cde";
+
 // Variablen für das State-Objekt generieren
 
 let moveCounter = 0;
@@ -873,30 +813,42 @@ function renderMove() {
   if (positionNow === "field-b3") {
     //allPossibleMovesBeforeNewPosition[0].style.boxShadow = "none";
 
-    fieldb3.append(pieceNow);
+    chessBoard[10].append(pieceNow);
 
     //moveCounter++;
   }
 
   if (positionNow === "field-b4") {
-    fieldb4.append(pieceNow);
+    chessBoard[11].append(pieceNow);
 
     //moveCounter++;
   }
 
   if (positionNow === "field-b5") {
-    fieldb5.append(pieceNow);
+    chessBoard[12].append(pieceNow);
     //moveCounter++;
   }
   if (positionNow === "field-b6") {
-    fieldb6.append(pieceNow);
+    chessBoard[13].append(pieceNow);
     //moveCounter++;
   }
   if (positionNow === "field-b7") {
-    fieldb7.append(pieceNow);
+    chessBoard[14].append(pieceNow);
     //moveCounter++;
   }
 
+  if (positionNow === "field-e2") {
+    chessBoard[33].append(pieceNow);
+    //moveCounter++;
+  }
+  if (positionNow === "field-f3") {
+    chessBoard[42].append(pieceNow);
+    //moveCounter++;
+  }
+  if (positionNow === "field-h3") {
+    chessBoard[58].append(pieceNow);
+    //moveCounter++;
+  }
   //console.log(state.betweenStartAndEnd[0]);
   //console.log(state.currentMove[0]);
 }
@@ -937,6 +889,33 @@ pawnB2.addEventListener("click", () => {
       state.currentMove[0].lastMovedSide = "White";
       state.currentMove[0].pieceMovedFromPosition = parent;
       state.currentMove[0].lastPossibleMoves = pawnSees;
+      renderMove();
+      //}
+    });
+  }
+});
+
+knightG1.addEventListener("click", () => {
+  let pieceIsActive = pieceDeactivateActivate();
+  let knightSees = whatAnyKnightSees();
+  let parent = knightG1.parentElement;
+
+  if (pieceIsActive === true) {
+    whatAnyKnightSees();
+  } else {
+    whatAnyKnightSees("none");
+  }
+  for (let i = 0; i < knightSees.length; i++) {
+    knightSees[i].addEventListener("click", () => {
+      //if (clickCounter === 1) {
+
+      state.currentMove[0].pieceMovedToPosition =
+        knightSees[i].attributes[1].value;
+      state.currentMove[0].currentMovedPiece = knightG1;
+      state.betweenStartAndEnd[0].moveAmount = moveCounter;
+      state.currentMove[0].lastMovedSide = "White";
+      state.currentMove[0].pieceMovedFromPosition = parent;
+      state.currentMove[0].lastPossibleMoves = knightSees;
       renderMove();
       //}
     });
