@@ -41,6 +41,14 @@ Sidenode: Knights can not only be tricky in the actual game....
 
 -> This also saved ~ 600 Lines of code where every possible move was hardcodet.
 
+21.11.22: While I made siginificant progress and I couldve reached my goal with this coding-method it
+was getting hard to take track in some cases, thats why:
+
+- I switched to Oop.
+- The Chessboard is now fully rendered from JS.
+- Each Piece SVG will be imported to the main file.
+- hard HTML lines of code saved ~ 1000 Lines
+
 ## Goal
 
 A fully working chess game with all its mechanics for 2 Players
