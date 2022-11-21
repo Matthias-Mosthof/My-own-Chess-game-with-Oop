@@ -176,6 +176,9 @@ function renderWhereIsKnightG1() {
       }
     }
   }
+
+  // wenn CurrentPosition undefined: Ist ein anderes ChildElement an erster Stelle!
+  console.log("hier bin ich:" + currentPosition);
   return {
     currentPosition: currentPosition,
     fieldNumber: fieldNumber,
@@ -604,6 +607,7 @@ function renderWhereIsPawnH2() {
 
 function whatAnyPawnSees(style) {
   let { currentPosition, fieldNumber, pawnSees } = renderWhereIsPawnB2();
+
   if (
     currentPosition.attributes.class.nodeValue.slice(-1) !== "1" &&
     currentPosition.attributes.class.nodeValue.slice(-1) !== "8"
@@ -621,14 +625,14 @@ function whatAnyPawnSees(style) {
 
 // Alle weißen Figuren als Variable speichern
 // Bauern
-const pawnA2 = document.querySelector("#white-pawn-a2");
+/*const pawnA2 = document.querySelector("#white-pawn-a2");
 const pawnB2 = document.querySelector("#white-pawn-b2");
 const pawnC2 = document.querySelector("#white-pawn-c2");
 const pawnD2 = document.querySelector("#white-pawn-d2");
 const pawnE2 = document.querySelector("#white-pawn-e2");
 const pawnF2 = document.querySelector("#white-pawn-f2");
 const pawnG2 = document.querySelector("#white-pawn-g2");
-const pawnH2 = document.querySelector("#white-pawn-h2");
+const pawnH2 = document.querySelector("#white-pawn-h2");*/
 
 // Türme
 const rookA1 = document.querySelector("#white-rook-a1");
@@ -647,6 +651,13 @@ const queenD1 = document.querySelector("#white-queen-d1");
 
 // König
 const kingE1 = document.querySelector("#white-king-e1");
+
+let whitePawns = [];
+fields.forEach((char) =>
+  whitePawns.push(document.querySelector("#white-pawn-" + char + "2"))
+);
+
+console.log(whitePawns);
 
 const insetColorMovePossibilty =
   "inset 0 0 1em rgb(0, 235, 102), inset 0 0 1em #cde, inset 0 0 1em #cde";
@@ -868,10 +879,10 @@ function pieceDeactivateActivate() {
   return pieceIsActive;
 }
 
-pawnB2.addEventListener("click", () => {
+whitePawns[1].addEventListener("click", () => {
   let pieceIsActive = pieceDeactivateActivate();
   let pawnSees = whatAnyPawnSees();
-  let parent = pawnB2.parentElement;
+  let parent = whitePawns[1].parentElement;
 
   if (pieceIsActive === true) {
     whatAnyPawnSees();
@@ -884,7 +895,7 @@ pawnB2.addEventListener("click", () => {
 
       state.currentMove[0].pieceMovedToPosition =
         pawnSees[i].attributes[1].value;
-      state.currentMove[0].currentMovedPiece = pawnB2;
+      state.currentMove[0].currentMovedPiece = whitePawns[1];
       state.betweenStartAndEnd[0].moveAmount = moveCounter;
       state.currentMove[0].lastMovedSide = "White";
       state.currentMove[0].pieceMovedFromPosition = parent;
@@ -921,3 +932,37 @@ knightG1.addEventListener("click", () => {
     });
   }
 });
+
+/*
+whitePawns.forEach((piece, ind) => {
+  let inde = ind;
+
+  piece.addEventListener("click", () => {
+    let pieceIsActive = pieceDeactivateActivate();
+    let pawnSees = whatAnyPawnSees();
+    let parent = piece.parentElement;
+    console.log(pieceIsActive);
+
+    if (pieceIsActive === true) {
+      console.log(inde);
+      whatAnyPawnSees("test", inde);
+    } else {
+      whatAnyPawnSees("none");
+    }
+    for (let i = 0; i < pawnSees.length; i++) {
+      pawnSees[i].addEventListener("click", () => {
+        //if (clickCounter === 1) {
+
+        state.currentMove[0].pieceMovedToPosition =
+          pawnSees[i].attributes[1].value;
+        state.currentMove[0].currentMovedPiece = piece;
+        state.betweenStartAndEnd[0].moveAmount = moveCounter;
+        state.currentMove[0].lastMovedSide = "White";
+        state.currentMove[0].pieceMovedFromPosition = parent;
+        state.currentMove[0].lastPossibleMoves = pawnSees;
+        renderMove();
+        //}
+      });
+    }
+  });
+});*/
