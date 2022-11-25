@@ -47,7 +47,13 @@ was getting hard to take track in some cases, thats why:
 - I switched to Oop.
 - The Chessboard is now fully rendered from JS.
 - Each Piece SVG will be imported to the main file.
-- hard HTML lines of code saved ~ 1000 Lines
+- hard HTML lines of code saved ~ 1000 Lines/
+
+###
+
+25.11.22: New Pawn Class which inherits from Pieces, in this Class the Move Behaviour is set and also which Opponent fields a Pawn can see (a Pawn moves straight but if theres an Opponent diagonal he can capture and move there)
+
+- This is saved in Class Properties: this.opponentFields and this.straightMovesFields
 
 ## Goal
 

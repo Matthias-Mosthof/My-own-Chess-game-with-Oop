@@ -5,11 +5,10 @@ import queen from "./pieces/white-queen.js";
 import pawn from "./pieces/white-pawn.js";
 import king from "./pieces/white-king.js";
 
-(function () {
-  class ChessBoard {
-    constructor() {
-      this.fields = [
-        /*{
+class ChessBoard {
+  constructor() {
+    this.fields = [
+      /*{
           name: "a1",
           domNode: "DOMNODE",
           owner: {},
@@ -28,129 +27,143 @@ import king from "./pieces/white-king.js";
             // piece: Rook,
           },
         },*/
-      ];
+    ];
+  }
+
+  // fields 8x8 = 64 felder
+  // schwarze und weiße felder
+  createField() {
+    let currentRow = 0;
+    let maxRows = 8;
+
+    const fieldColumns = ["a", "b", "c", "d", "e", "f", "g", "h"];
+
+    while (currentRow < maxRows) {
+      const currentColumn = fieldColumns[currentRow];
+      this.createRows(currentColumn);
+      currentRow++;
+    }
+  }
+
+  createRows(currentColumn) {
+    let maxFields = 8;
+    let currentField = 0;
+
+    while (currentField < maxFields) {
+      const currentFieldName = currentColumn + (currentField + 1);
+
+      const div = this.createElement(currentFieldName);
+
+      this.fields.push({
+        name: currentFieldName,
+        domNode: div,
+        owner: { player: undefined, owner: undefined },
+      });
+
+      currentField++;
     }
 
-    // fields 8x8 = 64 felder
-    // schwarze und weiße felder
-    createField() {
-      let currentRow = 0;
-      let maxRows = 8;
+    //console.log(this.fields);
+  }
 
-      const fieldColumns = ["a", "b", "c", "d", "e", "f", "g", "h"];
+  placePieces() {
+    /*const conditions = [
+      {
+        if: "rook",
+        file: rook(),
+      },
+      {
+        if: "bishop",
+        file: bishop(),
+      },
+    ];
 
-      while (currentRow < maxRows) {
-        const currentColumn = fieldColumns[currentRow];
-        this.createRows(currentColumn);
-        currentRow++;
+    for (let condition of conditions) {
+      if (this.fields[field].owner.owner === condition.if) {
+        this.fields[field].domNode.innerHTML = condition.file;
       }
-    }
-    createOwner() {
-      for (let field of this.fields) {
-        if (field.name === "a1" || field.name === "h1") {
-          field.owner = "rook";
-        }
-        if (field.name === "b1" || field.name === "g1") {
-          field.owner = "knight";
-        }
-        if (field.name === "c1" || field.name === "f1") {
-          field.owner = "bishop";
-        }
+    }*/
+  }
+  createElement(currentFieldName) {
+    const div = document.createElement("div");
+    div.className = "field " + currentFieldName;
+    div.id = "field-" + currentFieldName;
+    div.innerText = currentFieldName;
 
-        if (field.name === "d1") {
-          field.owner = "queen";
-        }
-        if (field.name === "e1") {
-          field.owner = "king";
-        }
-        if (
-          field.name === "a2" ||
-          field.name === "b2" ||
-          field.name === "c2" ||
-          field.name === "d2" ||
-          field.name === "e2" ||
-          field.name === "f2" ||
-          field.name === "g2" ||
-          field.name === "h2"
-        ) {
-          field.owner = "pawn";
-        }
-      }
-    }
-
-    createRows(currentColumn) {
-      let maxFields = 8;
-      let currentField = 0;
-
-      while (currentField < maxFields) {
-        const currentFieldName = currentColumn + (currentField + 1);
-
-        const div = this.createElement(currentFieldName);
-
-        this.fields.push({
-          name: currentFieldName,
-          domNode: div,
-          owner: undefined,
-        });
-
-        currentField++;
-      }
-
-      console.log(this.fields);
-    }
-    placePieces() {
-      for (let field in this.fields) {
-        console.log(this.fields[field].domNode);
-
-        if (this.fields[field].owner === "rook") {
-          this.fields[field].domNode.innerHTML = rook();
-        }
-        if (this.fields[field].owner === "bishop") {
-          this.fields[field].domNode.innerHTML = bishop();
-        }
-        if (this.fields[field].owner === "knight") {
-          this.fields[field].domNode.innerHTML = knight();
-        }
-        if (this.fields[field].owner === "queen") {
-          this.fields[field].domNode.innerHTML = queen();
-        }
-        if (this.fields[field].owner === "king") {
-          this.fields[field].domNode.innerHTML = king();
-        }
-        if (this.fields[field].owner === "pawn") {
-          this.fields[field].domNode.innerHTML = pawn();
-        }
-      }
-    }
-    createElement(currentFieldName) {
-      const div = document.createElement("div");
-      div.className = "field " + currentFieldName;
-      div.id = "field-" + currentFieldName;
-      div.innerText = currentFieldName;
-
-      //div.innerHTML = currentFieldName + rook();
-      return div;
-    }
-
-    renderField() {
-      for (let field of this.fields) {
-        document.querySelector("main").appendChild(field.domNode);
+    //div.innerHTML = currentFieldName + rook();
+    return div;
+  }
+  createOwnerInitial() {
+    for (let field of this.fields) {
+      if (field.name === "d1") {
+        field.owner = { player: "white", owner: "pawn" };
       }
     }
   }
 
-  const ChessBoardInstance = new ChessBoard();
-  ChessBoardInstance.createField();
-  ChessBoardInstance.renderField();
-  ChessBoardInstance.createOwner();
-  ChessBoardInstance.placePieces();
+  renderField() {
+    document.querySelector("main").innerHTML = "";
+    for (let field of this.fields) {
+      document.querySelector("main").appendChild(field.domNode);
+      if (field.owner.owner === "pawn") {
+        field.domNode.innerHTML = pawn();
+      }
+    }
+  }
+}
 
-  class Piece {}
+const ChessBoardInstance = new ChessBoard();
 
-  class Pawn extends Piece {}
-  class Bishop extends Piece {}
-  class Knight extends Piece {}
-  class Rook extends Piece {}
-  class Queen extends Piece {}
-  class King extends Piece {}
-})();
+ChessBoardInstance.placePieces();
+ChessBoardInstance.createField();
+ChessBoardInstance.createOwnerInitial();
+ChessBoardInstance.renderField();
+
+class Pieces {
+  constructor(color) {
+    this.color = color;
+  }
+}
+class whitePawnC2 extends Pieces {
+  constructor(color) {
+    super(color);
+    this.opponentFields = [];
+    this.straightMove = [];
+  }
+  iterateThroughFields() {
+    for (let i = 0; i < ChessBoardInstance.fields.length; i++) {
+      if (ChessBoardInstance.fields[i].owner.owner === "pawn") {
+        if (ChessBoardInstance.fields[i].name.slice(-1) !== "8") {
+          this.lookingForOpponent(i);
+          this.createStraightMovesFields(i);
+        }
+      }
+    }
+    console.log(this.straightMove);
+  }
+
+  lookingForOpponent(i) {
+    if (ChessBoardInstance.fields[i - 7] !== undefined) {
+      this.opponentFields.push(ChessBoardInstance.fields[i - 7]);
+    }
+    if (ChessBoardInstance.fields[i + 9] !== undefined) {
+      this.opponentFields.push(ChessBoardInstance.fields[i + 9]);
+    }
+  }
+
+  createStraightMovesFields(i) {
+    this.straightMove.push(ChessBoardInstance.fields[i + 1]);
+  }
+}
+
+const PawnInstance = new whitePawnC2();
+
+PawnInstance.iterateThroughFields();
+PawnInstance.createStraightMovesFields();
+//PawnInstance.renderMove();
+
+class Bishop extends Pieces {}
+class Knight extends Pieces {}
+class Rook extends Pieces {}
+class Queen extends Pieces {}
+class King extends Pieces {}
